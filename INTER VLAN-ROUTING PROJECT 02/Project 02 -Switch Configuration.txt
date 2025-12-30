@@ -1,0 +1,40 @@
+Switch> enable
+Switch# configure terminal
+
+! Create VLANs
+Switch(config)# vlan 10
+Switch(config-vlan)# name HR
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 20
+Switch(config-vlan)# name IT
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 30
+Switch(config-vlan)# name Finance
+Switch(config-vlan)# exit
+
+! Assign access ports to VLANs
+Switch(config)# interface range fa0/1-2
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 30
+Switch(config-if-range)# exit
+
+Switch(config)# interface range fa0/3-4
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 20
+Switch(config-if-range)# exit
+
+Switch(config)# interface range fa0/5-6
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 10
+Switch(config-if-range)# exit
+
+! Configure trunk port to router
+Switch(config)# interface fa0/24
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20,30
+Switch(config-if)# exit
+
+Switch(config)# end
+Switch# write memory

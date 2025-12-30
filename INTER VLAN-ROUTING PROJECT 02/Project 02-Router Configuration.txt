@@ -1,0 +1,33 @@
+Router> enable
+Router# configure terminal
+
+! Bring up the physical interface
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# no shutdown
+Router(config-if)# exit
+
+! Configure subinterfaces for each VLAN
+
+! VLAN 30 - Finance
+Router(config)# interface GigabitEthernet0/0.30
+Router(config-subif)# encapsulation dot1Q 30
+Router(config-subif)# ip address 192.168.10.1 255.255.255.224
+Router(config-subif)# no shutdown
+Router(config-subif)# exit
+
+! VLAN 20 - IT
+Router(config)# interface GigabitEthernet0/0.20
+Router(config-subif)# encapsulation dot1Q 20
+Router(config-subif)# ip address 192.168.10.33 255.255.255.224
+Router(config-subif)# no shutdown
+Router(config-subif)# exit
+
+! VLAN 10 - HR
+Router(config)# interface GigabitEthernet0/0.10
+Router(config-subif)# encapsulation dot1Q 10
+Router(config-subif)# ip address 192.168.10.65 255.255.255.224
+Router(config-subif)# no shutdown
+Router(config-subif)# exit
+
+Router(config)# end
+Router# write memory
